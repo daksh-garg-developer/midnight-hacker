@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL ACCESS</title>
+    <style>
+        body {
+            background-color: black; /* Changed to black for better hacker aesthetic */
+            color: greenyellow;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .line {
+            display: block;
+            margin-bottom: 10px;
+            min-height: 1.2em;
+        }
+
+        /* The cursor effect */
+        .cursor::after {
+            content: "_";
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .red-text {
+            color: #ff3e3e; /* Distinct color for data blocks */
+            font-size: 0.9em;
+            display: block;
+            padding-left: 15px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        /* Hide content initially */
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="terminal" class="container"></div>
+
+    <script>
+        alert("Thanks for visiting our site. Now Your PC is Hacked")
+        const terminal = document.getElementById('terminal');
+
+        // The sequence of messages
+        const sequence = [
+            { text: "Initialising hacking...", type: "green" },
+            { text: "CRITICAL: Lorem ipsum dolorLorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas tenetur repudiandae aperiam sequi voluptates delectus ut temporibus dolorem non eum culpa? Blanditiis sapiente veritatis exercitationem sit amet... [ENCRYPTED DATA SEGMENT]", type: "red" },
+            { text: "Reading your files...", type: "green" },
+            { text: "USER_DATA_01: Lorem ipsum dolor sit voluptates delectus ut temporibus dolorem non eum culpa? Blanditiis sapiente veritatis exercitationem amet consectetur... [ACCESS GRANTED]", type: "red" },
+            { text: "Sending all passwords and personal files to server...", type: "green" },
+            { text: "UPLOADING: 10%... 40%... 80%... 100%... SUCCESS", type: "red" },
+            { text: "Cleaning up...", type: "green" },
+            { text: "System Exit. Goodbye.", type: "green" }
+        ];
+
+        async function typeLine(lineObj) {
+            const div = document.createElement('div');
+            div.className = lineObj.type === "green" ? "line cursor" : "red-text cursor";
+            terminal.appendChild(div);
+
+            const message = lineObj.text;
+            
+            // Type the text character by character
+            for (let i = 0; i < message.length; i++) {
+                div.innerHTML += message.charAt(i);
+                
+                // If it's a dot, wait a bit longer for "blinking" effect
+                if (message.charAt(i) === ".") {
+                    await new Promise(res => setTimeout(res, 30));
+                } else {
+                    await new Promise(res => setTimeout(res, 50));
+                }
+            }
+
+            // Remove the blinking cursor from the finished line
+            div.classList.remove('cursor');
+        }
+
+        async function startHacking() {
+            for (const item of sequence) {
+                await typeLine(item);
+                await new Promise(res => setTimeout(res, 150)); // Pause between lines
+            }
+        }
+
+        startHacking();
+    </script>
+</body>
+</html>
